@@ -1,7 +1,7 @@
 # MATH10222, a potential well animation example: exercise 25
-# Rather than conservation of energy approaches, we can compute
+# Rather than a conservation of energy approach, we instead compute
 # the solution of Newton's second law directly for given initial
-# conditions
+# conditions of x=4, v=dx/dt=0.
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.integrate as integrate
@@ -53,16 +53,19 @@ particlePoint, = ax.plot([], [], 'o', color='r', markersize=12, zorder=20)
 
 plt.xlim(xLeft,xRight)
 plt.ylim(yBottom,yTop)
+plt.xlabel("position, x")
+plt.title("Exercise 25")
 
 # plot the potential well
-plt.plot(x, V(x))
+plt.plot(x, V(x), label="potential function V(x)")
 # plot the total energy (should be a straight line!)
-plt.plot(soln[:,0], 0.5*m*soln[:,1]*soln[:,1]+V(soln[:,0]))
+plt.plot(soln[:,0], 0.5*m*soln[:,1]*soln[:,1]+V(soln[:,0]), label="total energy E")
+plt.legend(loc='lower right', frameon=False)
 
 # animate the position of the particle in the well function
 def animate(i):
      particlePoint.set_data(soln[i,0],V(soln[i,0]))
      
 ani = animation.FuncAnimation(fig, animate, np.arange(1,len(t)), interval=20)
-#ani.save("PotentialWells.mp4", fps=25)
+ani.save("PotentialWells.mp4", fps=25)
 plt.show()
